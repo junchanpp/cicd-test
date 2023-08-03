@@ -6,6 +6,7 @@ COPY gradle gradle
 COPY src src
 COPY backend-config backend-config
 RUN chmod +x ./gradlew
+RUN ls -la
 RUN ./gradlew build
 
 FROM adoptopenjdk:11
