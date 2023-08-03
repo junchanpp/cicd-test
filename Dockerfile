@@ -1,8 +1,5 @@
 FROM adoptopenjdk:11 AS builder
-COPY .editorconfig .
 COPY gradlew .
-COPY settings.gradle.kts .
-COPY build.gradle.kts .
 COPY gradle gradle
 COPY src src
 COPY backend-config backend-config
