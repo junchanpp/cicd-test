@@ -54,12 +54,12 @@ jobs:
                 IMAGE_TAG: ${{ github.sha }}
               run: |
                 zip -r deploy-$IMAGE_TAG.zip ./scripts appspec.yml
-                aws s3 cp --region ap-northeast-2 --acl private ./deploy-$IMAGE_TAG.zip s3://cs-broker-bucket
+                aws s3 cp --region ap-northeast-2 --acl private ./deploy-$IMAGE_TAG.zip s3://cicd-test-13322
             - name: start deploy
               env:
                 IMAGE_TAG: ${{ github.sha }}
               run: |
-                aws deploy create-deployment --application-name csbroker-dev-api-codedeploy \
+                aws deploy create-deployment --application-name ci-cd-test \
                 --deployment-config-name CodeDeployDefault.OneAtATime \
-                --deployment-group-name csbroker-dev-api \
+                --deployment-group-name ci-cd-test \
                 --s3-location bucket=cs-broker-bucket,bundleType=zip,key=deploy-$IMAGE_TAG.zip
