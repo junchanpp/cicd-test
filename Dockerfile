@@ -9,7 +9,6 @@ COPY backend-config backend-config
 RUN chmod +x ./gradlew
 RUN ./gradlew build
 
-
 FROM adoptopenjdk:11
 RUN mkdir /opt/app
 COPY --from=builder build/libs/*.jar /opt/app/spring-boot-application.jar
