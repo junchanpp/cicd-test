@@ -2,8 +2,7 @@ name: Deploy to dev env
 
 on:
     push:
-        branches:
-            - dev
+        branches: [ dev ]
 jobs:
     build-docker:
         runs-on: ubuntu-latest
