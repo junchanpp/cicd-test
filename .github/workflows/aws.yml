@@ -41,14 +41,14 @@ jobs:
                 ECR_REGISTRY_ALIAS: b0t3v2v2
                 IMAGE_TAG: ${{ github.sha }}
               run: |
-                docker build -t $ECR_REGISTRY/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG .
+                docker build -t public.ecr.aws/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG .
                 
-                docker push $ECR_REGISTRY/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
+                docker push public.ecr.aws/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
                 mkdir scripts
                 touch scripts/deploy.sh
-                echo "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin $ECR_REGISTRY" >> scripts/deploy.sh
-                echo "docker pull $ECR_REGISTRY/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG" >> scripts/deploy.sh
-                echo "docker run -p 8080:8080 -e PROFILE=dev -d --restart always --name csbroker-api $ECR_REGISTRY/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG" >> scripts/deploy.sh
+                echo "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin public.ecr.aws/$ECR_REGISTRY_ALIAS" >> scripts/deploy.sh
+                echo "docker pull public.ecr.aws/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG" >> scripts/deploy.sh
+                echo "docker run -p 8080:8080 -e PROFILE=dev -d --restart always --name csbroker-api public.ecr.aws/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG" >> scripts/deploy.sh
             - name: upload to s3
               env:
                 IMAGE_TAG: ${{ github.sha }}
