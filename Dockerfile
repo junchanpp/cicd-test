@@ -1,11 +1,12 @@
 FROM adoptopenjdk:11 AS builder
 COPY gradlew .
+COPY settings.gradle .
+COPY build.gradle .
 COPY gradle gradle
 COPY src src
 COPY backend-config backend-config
 RUN chmod +x ./gradlew
 RUN ./gradlew build
-
 
 FROM adoptopenjdk:11
 RUN mkdir /opt/app
