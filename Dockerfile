@@ -1,5 +1,6 @@
 FROM adoptopenjdk:11 AS builder
-RUN cd ~
+RUN mkdir cicd-test
+RUN cd cicd-test
 COPY gradlew .
 COPY settings.gradle .
 COPY build.gradle .
