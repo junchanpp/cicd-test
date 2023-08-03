@@ -1,4 +1,4 @@
-FROM adoptopenjdk:11 AS builder
+FROM adoptopenjdk:17 AS builder
 RUN mkdir cicd-test
 RUN cd cicd-test
 COPY gradlew .
@@ -11,7 +11,7 @@ RUN chmod +x ./gradlew
 RUN ls -la
 RUN ./gradlew build
 
-FROM adoptopenjdk:11
+FROM adoptopenjdk:17
 RUN mkdir /opt/app
 COPY --from=builder build/libs/*.jar /opt/app/spring-boot-application.jar
 EXPOSE 8080
