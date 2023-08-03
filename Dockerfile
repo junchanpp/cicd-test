@@ -1,4 +1,5 @@
 FROM openjdk:17-oracle AS builder
+RUN microdnf install findutils
 RUN mkdir cicd-test
 RUN cd cicd-test
 COPY gradlew .
