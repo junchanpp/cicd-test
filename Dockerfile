@@ -1,4 +1,5 @@
 FROM adoptopenjdk:11 AS builder
+RUN cd ~
 COPY gradlew .
 COPY settings.gradle .
 COPY build.gradle .
