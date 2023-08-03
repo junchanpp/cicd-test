@@ -10,6 +10,7 @@ RUN chmod +x ./gradlew
 RUN ls -la
 RUN ./gradlew build
 
+
 FROM openjdk:17-oracle
 RUN mkdir /opt/app
 COPY --from=builder build/libs/*.jar /opt/app/spring-boot-application.jar
