@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AppController {
   @GetMapping("/")
   public String index() {
-    return "Hello, world!";
+    return "Hello, world! This is a test for CI/CD.";
   }
 }
