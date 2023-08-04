@@ -61,7 +61,8 @@ jobs:
               env:
                 IMAGE_TAG: ${{ github.sha }}
               run: |
-                aws deploy create-deployment --application-name cicd-test-codeDeploy  \
+                aws deploy create-deployment --region ap-northeast-2 \
+                --application-name cicd-test-codeDeploy  \
                 --deployment-config-name CodeDeployDefault.OneAtATime \
                 --deployment-group-name cicd-test-codeDeployGroup  \
                 --s3-location bucket=cicd-test-13322,bundleType=zip,key=deploy-$IMAGE_TAG.zip
