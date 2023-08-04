@@ -50,7 +50,7 @@ jobs:
                 touch scripts/deploy.sh
                 echo "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin public.ecr.aws/$ECR_REGISTRY_ALIAS" >> scripts/deploy.sh
                 echo "docker pull public.ecr.aws/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG" >> scripts/deploy.sh
-                echo "docker run -p 8080:8080 -e PROFILE=dev -d --restart always --name csbroker-api public.ecr.aws/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG" >> scripts/deploy.sh
+                echo "docker run -p 8080:8080 -e PROFILE=dev -d --restart always --name test public.ecr.aws/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG" >> scripts/deploy.sh
             - name: upload to s3
               env:
                 IMAGE_TAG: ${{ github.sha }}
