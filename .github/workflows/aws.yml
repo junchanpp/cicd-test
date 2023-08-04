@@ -45,6 +45,7 @@ jobs:
               run: |
                 docker build -t $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG .
                 docker push $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG
+                echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
                 mkdir scripts
                 touch scripts/deploy.sh
                 echo "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin public.ecr.aws/$ECR_REGISTRY_ALIAS" >> scripts/deploy.sh
