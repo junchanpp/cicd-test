@@ -63,3 +63,16 @@ jobs:
           --deployment-config-name CodeDeployDefault.OneAtATime \
           --deployment-group-name cicd-test-v2-code-deploy-group  \
           --s3-location bucket=cicd-test-v2-bucket,bundleType=zip,key=deploy-$IMAGE_TAG.zip
+
+  check-deployment-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check CodeDeploy Deployment Status
+        run: |
+          DEPLOYMENT_ID=$(aws deploy list-deployments --application-name cicd-test-v2-code-deploy --deployment-group-name cicd-test-v2-code-deploy-group --query "deployments[0].deploymentId" --output text)
+          aws deploy wait deployment-successful --deployment-id $DEPLOYMENT_ID
+
+      - name: Get Deployment Details
+        run: |
+          DEPLOYMENT_ID=$(aws deploy list-deployments --application-name cicd-test-v2-code-deploy --deployment-group-name cicd-test-v2-code-deploy-group --query "deployments[0].deploymentId" --output text)
+          aws deploy get-deployment --deployment-id $DEPLOYMENT_ID --query "deploymentInfo.status" --output text
