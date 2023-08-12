@@ -77,10 +77,10 @@ jobs:
 
       - name: Check CodeDeploy Deployment Status
         run: |
-          DEPLOYMENT_ID=$(aws deploy list-deployments --region ap-northeast-2 --application-name cicd-test-v2-code-deploy --deployment-group-name cicd-test-v2-code-deploy-group --query "deployments[0].deploymentId" --output text)
+          DEPLOYMENT_ID=$(aws deploy list-deployments --region ap-northeast-2 --application-name cicd-test-v2-code-deploy --deployment-group-name cicd-test-v2-code-deploy-group --query "deployments[0]" --output text)
           aws deploy wait deployment-successful --deployment-id $DEPLOYMENT_ID
 
       - name: Get Deployment Details
         run: |
-          DEPLOYMENT_ID=$(aws deploy list-deployments --region ap-northeast-2 --application-name cicd-test-v2-code-deploy --deployment-group-name cicd-test-v2-code-deploy-group --query "deployments[0].deploymentId" --output text)
-          aws deploy get-deployment --deployment-id $DEPLOYMENT_ID --query "deploymentInfo.status" --output text
+          DEPLOYMENT_ID=$(aws deploy list-deployments --region ap-northeast-2 --application-name cicd-test-v2-code-deploy --deployment-group-name cicd-test-v2-code-deploy-group --query "deployments[0]" --output text)
+          aws deploy get-deployment --deployment-id $DEPLOYMENT_ID --query "deploymentInfo.[status, creator]" --output text
