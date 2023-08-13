@@ -78,7 +78,20 @@ jobs:
       - name: Check CodeDeploy Deployment Status
         run: |
           DEPLOYMENT_ID=$(aws deploy list-deployments --region ap-northeast-2 --application-name cicd-test-v2-code-deploy --deployment-group-name cicd-test-v2-code-deploy-group --query "deployments[0]" --output text)
-          aws deploy wait deployment-successful --debug true --deployment-id $DEPLOYMENT_ID
+          while true; do
+            aws deploy get-deployment --deployment-id $DEPLOYMENT_ID --query "deploymentInfo.status" --output text >> deployment_status.log
+            aws deploy get-deployment --deployment-id $DEPLOYMENT_ID --query "deploymentInfo.logs[0].logUrl" --output text >> deployment_logs.log
+            STATUS=$(tail -n 1 deployment_status.log)
+          
+            # Display the last log line during the wait
+            echo "Last log: $(tail -n 1 deployment_logs.log)"
+          
+            if [ "$STATUS" != "InProgress" ]; then
+              break
+            fi
+          
+            sleep 30  # Wait for 30 seconds before checking the status again
+          done
 
       - name: Get Deployment Details
         run: |
